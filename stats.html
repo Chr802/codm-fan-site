@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Stats</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    font-family: Arial;
+    background: linear-gradient(to right, #020617, #0f172a);
+    color: white;
+    text-align: center;
+    margin: 0;
+}
+
+h1 {
+    margin-top: 20px;
+}
+
+/* Layout */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Boxes */
+.box {
+    background: #0f172a;
+    padding: 20px;
+    margin: 15px;
+    width: 90%;
+    max-width: 300px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,255,255,0.3);
+}
+
+/* Inputs */
+input {
+    padding: 8px;
+    margin: 5px;
+    width: 80px;
+}
+
+/* Buttons */
+button {
+    padding: 10px;
+    background: cyan;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #0ea5e9;
+}
+
+/* Leaderboard */
+.player {
+    background: #020617;
+    padding: 8px;
+    margin: 5px;
+    border-radius: 8px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Stats Dashboard 📊🔥</h1>
+
+<div class="container">
+
+<!-- K/D Calculator -->
+<div class="box">
+<h2>K/D Calculator</h2>
+
+<input type="number" id="k" placeholder="Kills">
+<input type="number" id="d" placeholder="Deaths">
+<br><br>
+
+<button onclick="calcKD()">Calculate</button>
+
+<p id="kdRes"></p>
+</div>
+
+<!-- Win Rate Calculator -->
+<div class="box">
+<h2>Win Rate %</h2>
+
+<input type="number" id="wins" placeholder="Wins">
+<input type="number" id="matches" placeholder="Matches">
+<br><br>
+
+<button onclick="calcWR()">Calculate</button>
+
+<p id="wrRes"></p>
+</div>
+
+<!-- Leaderboard -->
+<div class="box">
+<h2>Leaderboard 🏆</h2>
+
+<input type="text" id="name" placeholder="Name">
+<input type="number" id="kd" placeholder="K/D">
+<br><br>
+
+<button onclick="addPlayer()">Add Player</button>
+
+<div id="board"></div>
+</div>
+
+</div>
+
+<script>
+// K/D CALCULATOR
+function calcKD() {
+let k = document.getElementById("k").value;
+let d = document.getElementById("d").value;
+
+let res = document.getElementById("kdRes");
+
+if(d == 0){
+res.innerText = "K/D: Infinity 😎";
+res.style.color = "cyan";
+}else{
+let kd = (k/d).toFixed(2);
+
+res.innerText = "K/D: " + kd;
+
+if(kd > 3){
+res.style.color = "lime";
+}else if(kd > 2){
+res.style.color = "yellow";
+}else{
+res.style.color = "red";
+}
+}
+}
+
+// WIN RATE
+function calcWR() {
+let w = document.getElementById("wins").value;
+let m = document.getElementById("matches").value;
+
+let res = document.getElementById("wrRes");
+
+if(m == 0){
+res.innerText = "0%";
+}else{
+let wr = ((w/m) * 100).toFixed(1);
+res.innerText = wr + "%";
+}
+}
+
+// LEADERBOARD
+function addPlayer() {
+let name = document.getElementById("name").value;
+let kd = document.getElementById("kd").value;
+
+if(name === "" || kd === "") return;
+
+let board = document.getElementById("board");
+
+let player = document.createElement("div");
+player.className = "player";
+player.innerText = name + " — K/D: " + kd;
+
+board.appendChild(player);
+}
+</script>
+
+</body>
+</html>
